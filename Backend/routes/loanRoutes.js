@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/uploadS3");
-const { requestLoan, updateLoanStatus, getLoanHistory, getAllLoans,getAllPendingLoans, getTotalFine, requestRepayment, getAllRepaidLoans, Members, confirmRepayment,rejectRepayment, AllMembers, ActiveLoan, RepaymentHistory, getMembersSummary } = require("../controllers/loanController");
+const { requestLoan, updateLoanStatus, getLoanHistory, getAllLoans,getAllPendingLoans, getTotalFine, requestRepayment, getAllRepaidLoans, Members,getProfile,updateProfile, confirmRepayment,rejectRepayment, AllMembers, ActiveLoan, RepaymentHistory, getMembersSummary,  } = require("../controllers/loanController");
 const userMiddleware = require("../middlewares/userMiddleware");
 const adminMiddleware = require("../middlewares/adminMiddleware");
 
@@ -31,6 +31,8 @@ router.post("/:loanId/confirm-repayment", adminMiddleware, confirmRepayment);
 router.post("/:loanId/reject-repayment", adminMiddleware, rejectRepayment);
 
 router.get("/memberss", userMiddleware, AllMembers);
+router.put("/profile", userMiddleware, updateProfile);
+router.get("/profile", userMiddleware, getProfile);
 
 router.get("/members/summary", adminMiddleware, getMembersSummary);
 router.get("/members", adminMiddleware, Members);

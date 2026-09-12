@@ -21,12 +21,31 @@ const depositProofSchema = new mongoose.Schema(
     },
     filePath: {
       type: String, // local path to uploaded screenshot
-      required: true,
+      //required: true,
     },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
+    },
+    amount: {
+      type: Number,
+      default: 500
+    },
+
+    fine: {
+      type: Number,
+      default: 0
+    },
+
+    totalAmount: {
+      type: Number,
+      default: 500
+    },
+    rejectionReason: {
+      type: String,
+      default: null,
+      trim: true
     },
     reviewedBy: {
       type: mongoose.Schema.Types.ObjectId,

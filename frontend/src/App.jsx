@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -8,18 +7,17 @@ import Founders from "./pages/Founders";
 import Rules from "./pages/Rules";
 import Login from "./pages/Login";
 
-// ✅ Import dashboards
 import AdminDashboard from "./pages/AdminDashboard";
 import MemberDashboard from "./pages/MemberDashboard";
 
-// ✅ Import nested pages for Member
 import Deposits from "./pages/member/Deposits";
 import Loans from "./pages/member/Loans";
 import Fines from "./pages/member/Fines";
 import Profile from "./pages/member/Profile";
 import Repayment from "./pages/member/Repayment";
+import ProfileUpdate from "./pages/member/ProfileUpdate"
 
-// ✅ Import nested pages for Admin
+
 import ApproveDeposits from "./pages/admin/ApproveDeposits";
 import AllDeposits from "./pages/admin/AllDeposits";
 import AllLoans from "./pages/admin/AllLoans";
@@ -33,7 +31,7 @@ import PendingDeposits from "./pages/admin/PendingDeposits"
 function App() {
   const location = useLocation();
 
-  // ✅ Hide Navbar on /login, /admin/*, /member/*
+  
   const hideNavbar =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/member") ||
@@ -52,7 +50,7 @@ function App() {
           <Route path="/rules" element={<Rules />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Admin Dashboard (nested routes) */}
+          
           <Route path="/admin" element={<AdminDashboard />}>
             <Route path="members" element={<Members />} />
             <Route path="deposits" element={<AllDeposits />} />
@@ -65,13 +63,15 @@ function App() {
             <Route path="pendingdeposits" element={<PendingDeposits />} />
           </Route>
 
-          {/* Member Dashboard (nested routes) */}
+        
           <Route path="/member" element={<MemberDashboard />}>
             <Route path="deposits" element={<Deposits />} />
             <Route path="loans" element={<Loans />} />
             <Route path="fines" element={<Fines />} />
             <Route path="profile" element={<Profile />} />
             <Route path="repayment" element={<Repayment />} />
+            <Route path="profile-update" element={<ProfileUpdate/>} />
+
           </Route>
         </Routes>
       </div>

@@ -103,7 +103,7 @@ const deleteProfile = async (req, res) => {
   }
 };
 
-// GET MY PROFILE (member or admin)
+// GET PROFILE (member)
 const getProfile = async (req, res) => {
   try {
     const member = await Member.findById(req.user.id).select("-password");
@@ -114,7 +114,8 @@ const getProfile = async (req, res) => {
     // ✅ Deposits
     const deposits = await Deposit.find({ member: req.user.id, status: "paid" })
       .sort({ date: -1 });
-    const totalDeposited = deposits.reduce((sum, d) => sum + d.amount, 0);
+    //const totalDeposited = deposits.reduce((sum, d) => sum + d.amount, 0);
+    const totalDeposited=member.deposits;
     const lastDeposit = deposits[0] || null;
 
     // ✅ Loans with "statusDate"

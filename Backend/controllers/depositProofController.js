@@ -1,8 +1,8 @@
 const path = require("path");
 const s3 = require("../config/s3");
 const DepositProof = require("../models/DepositProof");
-const Deposit = require("../models/Deposit"); // your existing Deposit model
-const Member = require("../models/Member");   // for optional balances, if you track them
+const Deposit = require("../models/Deposit");
+const Member = require("../models/Member");
 
 // helper: ensure no duplicate pending/approved for same month
 async function ensureNoActiveSubmission(memberId, year, month) {
@@ -23,45 +23,157 @@ async function ensureNoActiveSubmission(memberId, year, month) {
   }
 }
 
-// POST /deposit-proofs/submit  (member)
+
+
 const submitProof = async (req, res) => {
   try {
     const memberId = req.user.id;
     const { year, month } = req.body;
 
-    if (!year || !month) return res.status(400).json({ message: "Year and Month are required" });
-    if (!req.file) return res.status(400).json({ message: "Payment screenshot is required" });
+    // -----------------------------
+    // Validate fields
+    // -----------------------------
+
+    if (!year || !month) {
+      return res.status(400).json({
+        message: "Year and Month are required"
+      });
+    }
+
+    // Screenshot is required
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Payment screenshot is required"
+      });
+    }
 
     const y = Number(year);
     const m = Number(month);
-    if (Number.isNaN(y) || Number.isNaN(m) || m < 1 || m > 12) {
-      return res.status(400).json({ message: "Invalid year or month" });
+
+    if (
+      Number.isNaN(y) ||
+      Number.isNaN(m) ||
+      m < 1 ||
+      m > 12
+    ) {
+      return res.status(400).json({
+        message: "Invalid year or month"
+      });
     }
 
+    // -----------------------------
+    // Current date
+    // -----------------------------
+
+    const now = new Date();
+
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    const currentDay = now.getDate();
+
+    // -----------------------------
+    // Don't allow future months
+    // -----------------------------
+
+    if (
+      y > currentYear ||
+      (y === currentYear && m > currentMonth)
+    ) {
+      return res.status(400).json({
+        message: "You cannot submit a contribution for a future month"
+      });
+    }
+
+    // -----------------------------
+    // Check duplicate submission
+    // -----------------------------
+
     await ensureNoActiveSubmission(memberId, y, m);
+
+    // -----------------------------
+    // Calculate contribution + fine
+    // -----------------------------
+
+    const contribution = 500;
+    let fine = 0;
+
+    // Previous year
+    if (y < currentYear) {
+      fine = 100;
+    }
+
+    // Previous month
+    else if (
+      y === currentYear &&
+      m < currentMonth
+    ) {
+      fine = 100;
+    }
+
+    // Current month after 12th
+    else if (
+      y === currentYear &&
+      m === currentMonth &&
+      currentDay > 12
+    ) {
+      fine = 100;
+    }
+
+    const totalAmount = contribution + fine;
+
+    // -----------------------------
+    // S3 file key
+    // -----------------------------
+
+    const filePath = req.file.key;
+
+    // -----------------------------
+    // Create deposit proof
+    // -----------------------------
 
     const proof = await DepositProof.create({
       member: memberId,
       year: y,
       month: m,
-      filePath: req.file.key,
-      status: "pending",
+
+      amount: contribution,
+      fine: fine,
+      totalAmount: totalAmount,
+
+      filePath: filePath,
+
+      status: "pending"
     });
 
+    // -----------------------------
+    // Response
+    // -----------------------------
+
     return res.status(201).json({
-      message: "Submission received. Waiting for committee approval.",
-      proof,
+      message:
+        fine > 0
+          ? `Submission received. Contribution: ₹${contribution}, Fine: ₹${fine}, Total: ₹${totalAmount}. Waiting for committee approval.`
+          : `Submission received. Contribution: ₹${contribution}, Total: ₹${totalAmount}. Waiting for committee approval.`,
+
+      proof
     });
+
   } catch (err) {
-    return res.status(err.statusCode || 500).json({ message: err.message || "Error submitting proof" });
+    console.error("Error submitting deposit proof:", err);
+
+    return res.status(err.statusCode || 500).json({
+      message:
+        err.message || "Error submitting proof"
+    });
   }
 };
+
 
 // GET /deposit-proofs/my  (member) pending submission
 const mySubmissions = async (req, res) => {
   try {
     const proofs = await DepositProof.find({ status: "pending" })
-      .populate("member", "name middlename lastname") // only fetch needed fields
+      .populate("member", "name middlename lastname")
       .sort({ submittedAt: -1 }); // latest first
 
     // Generate signed URLs for each proof
@@ -81,7 +193,7 @@ const mySubmissions = async (req, res) => {
       };
     });
 
-    res.status(200).json(proofsWithUrls); // ✅ always send array
+    res.status(200).json(proofsWithUrls);
   } catch (err) {
     console.error("Error fetching pending deposits:", err);
     res.status(500).json({ message: "Error fetching pending deposits" });
@@ -95,10 +207,10 @@ const filterDeposit = async (req, res) => {
 
     let filter = {};
 
-    // ✅ Always show only paid deposits by default
+    //  Always show only paid deposits by default
     filter.status = status || "paid";
 
-    // ✅ Filter by month & year
+    // Filter by month & year
     if (month && year) {
       const start = new Date(year, month - 1, 1); // month index starts at 0
       const end = new Date(year, month, 0, 23, 59, 59);
@@ -109,12 +221,12 @@ const filterDeposit = async (req, res) => {
       filter.date = { $gte: start, $lte: end };
     }
 
-    // ✅ Query deposits
+    //  Query deposits
     let deposits = await Deposit.find(filter)
       .populate("member", "firstName middleName lastName email phone")
       .sort({ date: -1 });
 
-    // ✅ Search (name, email, phone)
+    // Search (name, email, phone)
     if (search) {
       const regex = new RegExp(search, "i");
       deposits = deposits.filter(
@@ -140,46 +252,101 @@ const approveSubmission = async (req, res) => {
     const { id } = req.params;
 
     const proof = await DepositProof.findById(id);
-    if (!proof) return res.status(404).json({ message: "Submission not found" });
-    if (proof.status !== "pending") return res.status(400).json({ message: "Submission is not pending" });
 
-    // Mark approved
+    if (!proof) {
+      return res.status(404).json({
+        message: "Submission not found"
+      });
+    }
+
+    if (proof.status !== "pending") {
+      return res.status(400).json({
+        message: "Submission is not pending"
+      });
+    }
+
+    // -----------------------------------------
+    // Mark proof as approved
+    // -----------------------------------------
+
     proof.status = "approved";
     proof.reviewedBy = req.user.id;
     proof.reviewedAt = new Date();
+
     await proof.save();
 
-    // Create official deposit record (₹500 default)
+    // -----------------------------------------
+    // Create official deposit record
+    // -----------------------------------------
+
     const deposit = await Deposit.create({
       member: proof.member,
-      amount: 500,
-      date: new Date(proof.year, proof.month - 1, 1), // first day of that month
-      // date: new Date(),
+
+      amount: proof.amount,
+
+      fine: proof.fine,
+
+      totalAmount: proof.totalAmount,
+
+      date: new Date(
+        proof.year,
+        proof.month - 1,
+        1
+      ),
+
       status: "paid",
+
       year: proof.year,
+
       month: proof.month,
+
       filePath: proof.filePath
     });
 
-    // (Optional) Update a running total on Member if you use it
-    await Member.findByIdAndUpdate(proof.member, { $inc: { deposits: 500 } });
+    // -----------------------------------------
+    // Update member's contribution total
+    // -----------------------------------------
 
-    // Generate signed URL for the proof screenshot
+    await Member.findByIdAndUpdate(
+      proof.member,
+      {
+        $inc: {
+          deposits: proof.amount
+        }
+      }
+    );
+
+    // -----------------------------------------
+    // Generate signed screenshot URL
+    // -----------------------------------------
+
     const signedUrl = s3.getSignedUrl("getObject", {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
       Key: proof.filePath,
-      Expires: 60 * 5, // valid for 5 minutes
+      Expires: 60 * 5,
       ResponseContentDisposition: "inline",
     });
 
     res.json({
       message: "Submission approved and deposit recorded.",
+
       deposit,
+
       proof,
+
       fileUrl: signedUrl,
     });
+
   } catch (err) {
-    res.status(500).json({ message: "Error approving submission" });
+
+    console.error(
+      "Error approving submission:",
+      err
+    );
+
+    res.status(500).json({
+      message: "Error approving submission"
+    });
   }
 };
 
@@ -187,34 +354,89 @@ const approveSubmission = async (req, res) => {
 const rejectSubmission = async (req, res) => {
   try {
     const { id } = req.params;
-    // const { note } = req.body;
+    const { rejectionReason } = req.body;
+
+    // Reason is required
+    if (!rejectionReason || !rejectionReason.trim()) {
+      return res.status(400).json({
+        message: "Rejection reason is required"
+      });
+    }
 
     const proof = await DepositProof.findById(id);
-    if (!proof) return res.status(404).json({ message: "Submission not found" });
-    if (proof.status !== "pending") return res.status(400).json({ message: "Submission is not pending" });
+
+    if (!proof) {
+      return res.status(404).json({
+        message: "Submission not found"
+      });
+    }
+
+    if (proof.status !== "pending") {
+      return res.status(400).json({
+        message: "Submission is not pending"
+      });
+    }
 
     proof.status = "rejected";
-    // proof.reviewNote = note || "Rejected by committee.";
+    proof.rejectionReason = rejectionReason.trim();
     proof.reviewedBy = req.user.id;
     proof.reviewedAt = new Date();
+
     await proof.save();
 
-    res.json({ message: "Submission rejected.", proof });
+    res.json({
+      message: "Submission rejected.",
+      proof
+    });
+
   } catch (err) {
-    res.status(500).json({ message: "Error rejecting submission" });
+    console.error("Error rejecting submission:", err);
+
+    res.status(500).json({
+      message: "Error rejecting submission"
+    });
   }
 };
 
-// ✅ Get member's deposit history
+// Get member's deposit history
 const getDepositHistory = async (req, res) => {
   try {
-    const deposits = await Deposit.find({ member: req.user.id }).sort({ date: -1 });
-     const proofsWithUrls = deposits.map((p) => {
+    // Approved deposits
+    const deposits = await Deposit.find({
+      member: req.user.id
+    }).sort({ date: -1 });
+
+    // Pending and rejected proofs
+    const proofs = await DepositProof.find({
+      member: req.user.id,
+      status: { $in: ["pending", "rejected"] }
+    }).sort({ createdAt: -1 });
+
+    // Convert approved deposits
+    const depositHistory = deposits.map((d) => {
+      const fileUrl = d.filePath
+        ? s3.getSignedUrl("getObject", {
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: d.filePath,
+          Expires: 60 * 5,
+          ResponseContentDisposition: "inline",
+        })
+        : null;
+
+      return {
+        ...d.toObject(),
+        status: "approved",
+        fileUrl,
+      };
+    });
+
+    // Convert pending/rejected proofs
+    const proofHistory = proofs.map((p) => {
       const fileUrl = p.filePath
         ? s3.getSignedUrl("getObject", {
           Bucket: process.env.AWS_S3_BUCKET_NAME,
           Key: p.filePath,
-          Expires: 60 * 5, // URL valid for 5 minutes
+          Expires: 60 * 5,
           ResponseContentDisposition: "inline",
         })
         : null;
@@ -224,13 +446,34 @@ const getDepositHistory = async (req, res) => {
         fileUrl,
       };
     });
-    res.status(200).json(proofsWithUrls);
+
+    // Combine both collections
+    const history = [
+      ...depositHistory,
+      ...proofHistory
+    ];
+
+    // Sort newest first
+    history.sort((a, b) => {
+      const dateA = new Date(a.createdAt || a.date);
+      const dateB = new Date(b.createdAt || b.date);
+
+      return dateB - dateA;
+    });
+
+    res.status(200).json(history);
+
   } catch (err) {
-    res.status(500).json({ message: "Error fetching history", error: err.message });
+    console.error("Error fetching deposit history:", err);
+
+    res.status(500).json({
+      message: "Error fetching history",
+      error: err.message
+    });
   }
 };
 
-// ✅ Get total amount deposited by member
+//  Get total amount deposited by member
 const getTotalDeposit = async (req, res) => {
   try {
     const result = await Deposit.aggregate([
@@ -244,7 +487,7 @@ const getTotalDeposit = async (req, res) => {
   }
 };
 
-// ✅ Admin: Get all deposits
+// Admin: Get all deposits
 // const getAllDeposits = async (req, res) => {
 //   try {
 //     const { month, year, status, search } = req.query;
@@ -294,33 +537,33 @@ const getAllDeposits = async (req, res) => {
     const { month, year, status, search } = req.query;
     let filter = {};
 
-    // ✅ Filter by status
+    // Filter by status
     if (status) filter.status = status;
 
     if (month && year) {
-      // ✅ Filter by month/year
+      //  Filter by month/year
       const start = new Date(year, month - 1, 1);
       const end = new Date(year, month, 0, 23, 59, 59);
       filter.date = { $gte: start, $lte: end };
     } else if (year) {
-      // ✅ Filter by full year
+      //  Filter by full year
       const start = new Date(year, 0, 1);
       const end = new Date(year, 11, 31, 23, 59, 59);
       filter.date = { $gte: start, $lte: end };
     } else {
-      // ✅ Default: current month deposits
+      //  Default: current month deposits
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth(), 1);
       const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
       filter.date = { $gte: start, $lte: end };
     }
 
-    // ✅ Fetch deposits with member info
+    //  Fetch deposits with member info
     let deposits = await Deposit.find(filter)
       .populate("member", "name middlename lastname email phone")
       .sort({ date: -1 });
 
-    // ✅ Search by member details
+    //  Search by member details
     if (search) {
       const regex = new RegExp(search, "i");
       deposits = deposits.filter(
@@ -348,11 +591,13 @@ const getPendingDeposits = async (req, res) => {
       return res.status(400).json({ message: "Month is required in YYYY-MM format" });
     }
 
-    // 🔹 Parse month string
+    // Parse month string
     const [year, mon] = month.split("-").map(Number);
 
     // 1. Get all members
-    const members = await Member.find();
+    const members = await Member.find({
+      role: { $ne: "admin" }
+    });
 
     // 2. Get deposits for that year & month with status = "paid"
     const deposits = await Deposit.find({
@@ -381,7 +626,7 @@ const getPendingDeposits = async (req, res) => {
       })),
     });
   } catch (err) {
-    console.error("❌ Error in getPendingDeposits:", err);
+    console.error("Error in getPendingDeposits:", err);
     res.status(500).json({ message: "Error fetching pending deposits", error: err.message });
   }
 };

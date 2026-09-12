@@ -9,7 +9,7 @@ const memberSchema = new mongoose.Schema({
     },
     middlename: {
         type: String,
-        required: true,
+        //required: true,
     },lastname: {
         type: String,
         required: true,
@@ -18,8 +18,6 @@ const memberSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
-        unique: true
     },
     role: {
         type: String,

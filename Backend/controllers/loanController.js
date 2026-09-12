@@ -3,9 +3,10 @@ const Member = require("../models/Member");
 const Deposit = require("../models/Deposit");
 const RepaymentProof = require("../models/repaymentProof");
 const s3 = require("../config/s3");
+const bcrypt = require("bcryptjs");
 
 
-// ✅ Member requests a loan
+// Member requests a loan
 const requestLoan = async (req, res) => {
   try {
     const { amount, guarantorId } = req.body;
@@ -33,18 +34,18 @@ const requestLoan = async (req, res) => {
 
     // Guarantor checks
     if (guarantorId === req.user.id) {
-      return res.status(400).json({ message: "You cannot be your own guarantor." });
+      return res.status(400).json({ message: "You cannot be your own witness." });
     }
 
     const guarantor = await Member.findById(guarantorId);
     if (!guarantor) {
-      return res.status(404).json({ message: "Guarantor not found." });
+      return res.status(404).json({ message: "witness not found." });
     }
 
     //Guarantor can only back one active loan
     const guarantorActiveLoan = await Loan.findOne({ guarantor: guarantorId, status: { $in: ["approved", "pending", "repayment-requested"] } });
     if (guarantorActiveLoan) {
-      return res.status(400).json({ message: "This guarantor is already backing another active loan." });
+      return res.status(400).json({ message: "This witness is already backing another active loan." });
     }
 
     // Create loan request
@@ -64,7 +65,7 @@ const requestLoan = async (req, res) => {
   }
 };
 
-// ✅ Admin approves/rejects loan
+//  Admin approves/rejects loan
 const updateLoanStatus = async (req, res) => {
   try {
     const { loanId } = req.params;
@@ -231,7 +232,7 @@ const rejectRepayment = async (req, res) => {
 
 
 
-// ✅ Member views their loan history
+//  Member views their loan history
 const getLoanHistory = async (req, res) => {
   try {
     const loans = await Loan.find({ member: req.user.id }).populate("guarantor", "name  middlename lastname");
@@ -346,53 +347,157 @@ const RepaymentHistory = async (req, res) => {
 
 const getMembersSummary = async (req, res) => {
   try {
-    // ✅ Total deposits (only paid)
+
+    // -----------------------------------------
+    // Total deposits
+    // -----------------------------------------
+
     const deposits = await Member.aggregate([
       {
         $group: {
-          _id: null, // group all documents together
-          total: { $sum: "$deposits" }
+          _id: null,
+          total: {
+            $sum: "$deposits"
+          }
         }
       }
     ]);
 
-    // ✅ Total fines (sum of all fines)
-    const result = await Loan.aggregate([
-      { $group: { _id: null, total: { $sum: "$fine" } } }
-    ]);
-    const totalFine = result.length > 0 ? result[0].total : 0;
+    // -----------------------------------------
+    // Loan fines
+    // -----------------------------------------
 
-    // ✅ Active loans (approved or repayment_requested)
-    const activeLoansAgg = await Loan.aggregate([
-      { $match: { status: { $in: ["approved", "repayment_requested"] } } },
+    const loanFineAgg = await Loan.aggregate([
       {
         $group: {
           _id: null,
-          totalAmount: { $sum: "$amount" },
-          count: { $sum: 1 }
+          total: {
+            $sum: "$fine"
+          }
         }
       }
     ]);
 
-    const activeLoans = activeLoansAgg.length > 0 ? activeLoansAgg[0].count : 0;
-    const activeLoansAmount = activeLoansAgg.length > 0 ? activeLoansAgg[0].totalAmount : 0;
+    const loanFine =
+      loanFineAgg.length > 0
+        ? loanFineAgg[0].total
+        : 0;
+
+    // -----------------------------------------
+    // Deposit fines
+    // Only paid/approved deposits
+    // -----------------------------------------
+
+    const depositFineAgg = await Deposit.aggregate([
+      {
+        $match: {
+          status: "paid"
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: "$fine"
+          }
+        }
+      }
+    ]);
+
+    const depositFine =
+      depositFineAgg.length > 0
+        ? depositFineAgg[0].total
+        : 0;
+
+    // -----------------------------------------
+    // Total fines
+    // -----------------------------------------
+
+    const totalFine =
+      loanFine + depositFine;
+
+    // -----------------------------------------
+    // Active loans
+    // -----------------------------------------
+
+    const activeLoansAgg = await Loan.aggregate([
+      {
+        $match: {
+          status: {
+            $in: [
+              "approved",
+              "repayment_requested"
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+
+          totalAmount: {
+            $sum: "$amount"
+          },
+
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ]);
+
+    const activeLoans =
+      activeLoansAgg.length > 0
+        ? activeLoansAgg[0].count
+        : 0;
+
+    const activeLoansAmount =
+      activeLoansAgg.length > 0
+        ? activeLoansAgg[0].totalAmount
+        : 0;
+
+    // -----------------------------------------
+    // Response
+    // -----------------------------------------
 
     res.json({
-      totalDeposits: deposits.length > 0 ? deposits[0].total : 0,
+
+      totalDeposits:
+        deposits.length > 0
+          ? deposits[0].total
+          : 0,
+
       totalFine,
+
+      // Breakdown
+      loanFine,
+      depositFine,
+
       activeLoans,
+
       activeLoansAmount
+
     });
+
   } catch (err) {
-    console.error("Error in getMembersSummary:", err);
-    res.status(500).json({ message: "Server Error" });
+
+    console.error(
+      "Error in getMembersSummary:",
+      err
+    );
+
+    res.status(500).json({
+      message: "Server Error"
+    });
   }
 };
 
 const Members = async (req, res) => {
   try {
-    const members = await Member.find().sort({ createdAt: -1 }); // newest first
-    
+    const members = await Member.find({
+      role: { $ne: "admin" }
+    }).sort({});
+
     const memberData = await Promise.all(
       members.map(async (m) => {
         const memberObj = m.toObject();
@@ -432,7 +537,90 @@ const Members = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const member = await Member.findById(req.user.id).select("-password");
 
+    if (!member) {
+      return res.status(404).json({
+        message: "Member not found"
+      });
+    }
+
+    res.status(200).json(member);
+
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+
+    res.status(500).json({
+      message: "Failed to fetch profile"
+    });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  try {
+    const memberId = req.user.id;
+
+    const { email, phone, password } = req.body;
+
+    const member = await Member.findById(memberId);
+
+    if (!member) {
+      return res.status(404).json({
+        message: "Member not found"
+      });
+    }
+
+    // Update email if provided
+    if (email) {
+      const existingEmail = await Member.findOne({
+        email: email.toLowerCase(),
+        _id: { $ne: memberId }
+      });
+
+      if (existingEmail) {
+        return res.status(400).json({
+          message: "Email is already in use"
+        });
+      }
+
+      member.email = email.toLowerCase().trim();
+    }
+
+    // Update phone if provided
+    if (phone !== undefined) {
+      member.phone = phone.trim();
+    }
+
+    // Update password if provided
+    if (password) {
+      member.password = await bcrypt.hash(password, 10);
+    }
+
+    await member.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        _id: member._id,
+        name: member.name,
+        middlename: member.middlename,
+        lastname: member.lastname,
+        email: member.email,
+        phone: member.phone,
+        role: member.role
+      }
+    });
+
+  } catch (err) {
+    console.error("❌ Error updating profile:", err);
+
+    res.status(500).json({
+      message: "Failed to update profile"
+    });
+  }
+};
 
 
 module.exports = {
@@ -450,5 +638,7 @@ module.exports = {
   ActiveLoan,
   RepaymentHistory,
   getMembersSummary,
-  Members
+  Members,
+  getProfile,
+  updateProfile,
 };

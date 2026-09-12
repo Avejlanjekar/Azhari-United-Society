@@ -1,0 +1,497 @@
+[
+  {
+    "name": "Zahir",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "zahirnachare@gmail.com",
+    "password": "$2b$10$FHJ19B9IrLPlBcDxtSvWg.INJSDro5pNYntzt.O5vZ1G./ikt4WRu",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Zubair",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "zubairnachare@gmail.com",
+    "password": "$2b$10$Zi1.Ozae0V0Rek/H6.gB5OugNACLoTreEzFCX8Ft.YeNpliJcBhn6",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Arman",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "armanlanjekar@gmail.com",
+    "password": "$2b$10$EbmSHLNTTzIfhFDdFfusbePZo0qGcsz.fXDwwBrYQESCrURj9H4iq",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Avej",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "avejlanjekar@gmail.com",
+    "password": "$2b$10$ipx.vXkArFLH9Z3v8mqZt.Rqu/70K6tqAIcqAL/PrDePv9I8uaTvK",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Aftab",
+    "middlename": "",
+    "lastname": "Choche",
+    "email": "aftabchoche@gmail.com",
+    "password": "$2b$10$EU.iaifmgK2c6CtOJ/KTC.Mt78wLqxNMXTxXOxXYXzfhgKpr30fWS",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Sohel",
+    "middlename": "",
+    "lastname": "Choche",
+    "email": "sohelchoche@gmail.com",
+    "password": "$2b$10$6enrk1R.O3M8FRCo/a6vP.zXHNQQ163Hva73AlSzkyK59xfkUFRPO",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Asif",
+    "middlename": "A",
+    "lastname": "Nachare",
+    "email": "asifanachare@gmail.com",
+    "password": "$2b$10$MrsMwSeFxggDROs7dzo1h.BoWUXkVCsltZZ.YMJhMyoJlgePSwDRi",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Miraj",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "mirajnachare@gmail.com",
+    "password": "$2b$10$Z5iGeaF6TEcJ.CFdm8DtYexlnFQv6r5uzKufQqYhXPYyo7SyEunxe",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Asif",
+    "middlename": "I",
+    "lastname": "Choche",
+    "email": "asifichoche@gmail.com",
+    "password": "$2b$10$0WuYJtO0l84xZf6htz/SSuX272knNDUN0dLHW6AG/a0Mv8jPFKaP6",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Tahir",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "tahirnachare@gmail.com",
+    "password": "$2b$10$.lN5FCyLzn7/pv6/H77nc.jwf/fAvjvFTmQ2pCRKp6CsZ.2sixSTG",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Sohel",
+    "middlename": "R",
+    "lastname": "Lanjekar",
+    "email": "sohelrlanjekar@gmail.com",
+    "password": "$2b$10$5nO2PweTHh23QJV.wPFx/.zeqWu0aYUMWyFKk08v.w814Dfrv4H8u",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Dildar",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "dildarlanjekar@gmail.com",
+    "password": "$2b$10$/BDwBOiVzvxPIV8iJR.DcekBxh3Lktjh2IzhZERs07iZZ1URVMGNW",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Tufel",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "tufelnandkar@gmail.com",
+    "password": "$2b$10$DiLvEQ5MB.8lsqnOK84aVuJOASWGCJt0bkU1ou8D3qDWbVPmZHUzK",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Altaj",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "altajnandkar@gmail.com",
+    "password": "$2b$10$sy15Q5K2Az9QLdCZKjJjSO.a1rEu5CHS5LtEd0cCIq/pw0uYLA/nu",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Muzaffar",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "muzaffarlanjekar@gmail.com",
+    "password": "$2b$10$e2og4SgDqoA/8DSY2g4YCeQaqCtj.IA96YNJQVDiTXdFh9VgIqHju",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ajmeer",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "ajmeernachare@gmail.com",
+    "password": "$2b$10$Vu/n9M0ZjC.BOYQNEyStx.pULhnjzYlLq.Efr6J9tN9/jAJl45IRy",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ashfak",
+    "middlename": "I",
+    "lastname": "Lanjekar",
+    "email": "ashfakilanjekar@gmail.com",
+    "password": "$2b$10$D3cplc.G7m560Uf23zd4JOLm.PIo4vYufuA3iYFdhFqVP8xJr.YvG",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Sallu",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "sallunachare@gmail.com",
+    "password": "$2b$10$kF/OpIdNiqSB3TiZymv1bOG7X/jD2gJ/Ay16Ui.tkFnILCXbpjobK",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Mainuddin",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "mainuddinnachare@gmail.com",
+    "password": "$2b$10$8burykXaa4OsCIm.n4cE9OGNhxzFVhKVA4gEHWimrm3DGXW8A/2o.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Siddik",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "siddiknachare@gmail.com",
+    "password": "$2b$10$0rUq5mJDnAGOo2qXqC3C8uBn8XOmQHjYPD5mp4zCmKJGZjxtYzIea",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Shaibaz",
+    "middlename": "",
+    "lastname": "Choche",
+    "email": "shaibazchoche@gmail.com",
+    "password": "$2b$10$no2CgHO9YzRKNasrsMWYa.xvAGd2RK3duWY1F8BoYSfKHF9tFIi/q",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Tanveer",
+    "middlename": "",
+    "lastname": "Thodge",
+    "email": "tanveerthodge@gmail.com",
+    "password": "$2b$10$/xp4RgsttK8qT17UJm03se5o/fZU2tZ5F8kGegm8R8visg75ujyU6",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ahmad",
+    "middlename": "",
+    "lastname": "Hafiz",
+    "email": "ahmadhafiz@gmail.com",
+    "password": "$2b$10$N.3YGpon..VT/FGB0.wfq./wEbIL6HDOwYCfP.yBvweZkwJ4dTo2y",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Junaid",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "junaidnachare@gmail.com",
+    "password": "$2b$10$VxCI/stSP2SPaEgfBViPzusyRgZxoWO.MxiD1lrLcZZQv3nuS2VGu",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ahmad",
+    "middlename": "H",
+    "lastname": "Lanjekar",
+    "email": "ahmadhlanjekar@gmail.com",
+    "password": "$2b$10$nVDOhVefT9mgYLciAHewEe7gLFHK7FRJCVk8EII36mVNL26aZ3qw6",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Altaf",
+    "middlename": "R",
+    "lastname": "Lanjekar",
+    "email": "altafrlanjekar@gmail.com",
+    "password": "$2b$10$r84CqF4wZzJEElCt9ySfrujMbeBZGkQcSNLEMgWS4c1kGqpY6HMhW",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Gaus",
+    "middlename": "S",
+    "lastname": "Nandkar",
+    "email": "gaussnandkar@gmail.com",
+    "password": "$2b$10$2t8vbpJdn.zYann52XXXfezgPOuTwjAMrpeXuiSFveKeIHpA0ZJGu",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Shakib",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "shakibnachare@gmail.com",
+    "password": "$2b$10$6qEYAyKO3vYnsMFDMV8ndOSm2xZm879PDcF.LBw1oi.LmvoNrECry",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Nawaz",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "nawaznachare@gmail.com",
+    "password": "$2b$10$BN.8Xh9jjoQ7CTJn/mAXC.fOZGXgO8xXOBBIr/zJhku9po3LNY7Lq",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Sohel",
+    "middlename": "N",
+    "lastname": "Lanjekar",
+    "email": "sohelnlanjekar@gmail.com",
+    "password": "$2b$10$07cUBZ.Slp3gMZmOuQmwtuk/aTUPk12xfdtSfHIZ0E6xsarDPQdwO",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Gulam",
+    "middlename": "S",
+    "lastname": "Choche",
+    "email": "gulamschoche@gmail.com",
+    "password": "$2b$10$7Bmw0PsYleW7o9LdqVxZpuVm7Ot2HW9ra7UbgA/VT9KTZjWhHgVb.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Mustak",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "mustaknachare@gmail.com",
+    "password": "$2b$10$FGnHva98BRH16LxZJNUewOdA9bCTg79YUmLjvQ8lxk8F5b/RoULbW",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ramjan",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "ramjannachare@gmail.com",
+    "password": "$2b$10$sAjt6z7a/efaba3rj/7nyu6EkaH.W5HzYMTDbquEcZLVfbmWIaNTy",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Mubarak",
+    "middlename": "A",
+    "lastname": "Lanjekar",
+    "email": "mubarakalanjekar@gmail.com",
+    "password": "$2b$10$dWQHCEN0I6wLcOx9rOy3SOXiFM3zH8QoOJ2HoeZDu40/Ks8s/cqN6",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ismail",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "ismailnachare@gmail.com",
+    "password": "$2b$10$xk4L/SwDdvi77p4XVn5I7uIOElvgLHziiKXyVDorSKtQaboMo4xhS",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Sahil",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "sahilnandkar@gmail.com",
+    "password": "$2b$10$84j1YrjgN4Abe8gDDFmNsu/1vfS1AV42h2m8iMLzgVvkHwHO1aZHq",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "G.Gaus",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "ggausnachare@gmail.com",
+    "password": "$2b$10$Kfns4nWaq8vBg0KTuIPH6ecwWtFWeQye3KIyn5dv/BfE0ZERdxB1C",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ashfak",
+    "middlename": "",
+    "lastname": "Raut",
+    "email": "ashfakraut@gmail.com",
+    "password": "$2b$10$nxF4IvGjztqAFPjJic.AfOKBoxAroGhjVBIlzWu/bW334zuiEXwUO",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Mansoor",
+    "middlename": "",
+    "lastname": "Nachare",
+    "email": "mansoornachare@gmail.com",
+    "password": "$2b$10$7GyM0YFtLD/BejR4N9QtxOnqC9oa79jVVqAIIutmizieJDUP.atVq",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Nijam",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "nijamnandkar@gmail.com",
+    "password": "$2b$10$6G9Ay1j2L1C8KM5dVILL9uZUEeMZ85lW10FWUyJKRdGm3g1sgssQS",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ahmad",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "ahmadnandkar@gmail.com",
+    "password": "$2b$10$E96Wi0YC6MIdTUD13rqr5uC.3ShbTcxnZ1m1kFf5aT.x/.j.Tlgh.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Tayyab",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "tayyablanjekar@gmail.com",
+    "password": "$2b$10$yBWNAU2yB0OHUNcsYZv6Uek277gCSlKXFoKrXHng.vORzd.y62GU.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Iqbal",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "iqballanjekar@gmail.com",
+    "password": "$2b$10$TGMA55zLcRB4vCS6kJgf6OxdRtcAYXHlQdGrg3KML67sDH5W1.wI.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Nawaz",
+    "middlename": "A",
+    "lastname": "Nachare",
+    "email": "nawazanachare@gmail.com",
+    "password": "$2b$10$zt8sFVMKFfgwHaB5LxKrfO0pmMUQC.Fr/3Y5qJUwEeOR1Il2zWAmu",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Ajaj",
+    "middlename": "",
+    "lastname": "Choche",
+    "email": "ajajchoche@gmail.com",
+    "password": "$2b$10$MUCc2SLlSHXSClOSlP.4iOH3nRXuhZa/7AOSMXJYsUWl17v7Y6QR2",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Avej sayaad",
+    "middlename": "",
+    "lastname": "Lanjekar",
+    "email": "avejsayaadlanjekar@gmail.com",
+    "password": "$2b$10$qPlvvp./kMWbuzIwU5tVY.ZO9uLG/f6EAc2bH70DScOuhM0C2Hdum",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Aman",
+    "middlename": "salim",
+    "lastname": "Lanjekar",
+    "email": "amansalimlanjekar@gmail.com",
+    "password": "$2b$10$nw.MqplNDSCjjE5UTwquPO4uBAEva02CHbPLMysQImEyz6L6K00e.",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Nawaz",
+    "middlename": "",
+    "lastname": "Thodge",
+    "email": "nawazthodge@gmail.com",
+    "password": "$2b$10$ChkcTTTzI8uHP7Y2dUiSN.zrnm.KWzG3JjOGaWEY3KDTgifmWLKfC",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "altaj",
+    "middlename": "k",
+    "lastname": "Nachare",
+    "email": "altajknachare@gmail.com",
+    "password": "$2b$10$apODIbwdIigwBn9Wbvk9DuH5WeLooLDrVlrXUuOpL9cb8Tn1DWNQS",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Anis",
+    "middlename": "",
+    "lastname": "lanjekar",
+    "email": "anislanjekar@gmail.com",
+    "password": "$2b$10$dJ8e7naJtgcOxdWuVfJZMOh99yYEXK/wr6xixy29j7m9S0PNUrrdm",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Abuturab",
+    "middlename": "",
+    "lastname": "lanjekar",
+    "email": "abuturablanjekar@gmail.com",
+    "password": "$2b$10$YyReevea/gNIbvkBBwyPdegpSFbdu5ynKc1nuJCCfvUGrPmnZ7PQG",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Rajjef",
+    "middlename": "",
+    "lastname": "Nandkar",
+    "email": "rajjefnandkar@gmail.com",
+    "password": "$2b$10$Kxih7EuV4oXTFloI4PqVoOeUkahneVYZqRBwu7aheCZlIgMDbbMnK",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Gulam",
+    "middlename": "M",
+    "lastname": "choche",
+    "email": "gulammchoche@gmail.com",
+    "password": "$2b$10$rP1hmgt7peHWaYZeAtvJPePJmc9Z/tgupZnvjMGVa4niXNpFUezCm",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Danish",
+    "middlename": "S",
+    "lastname": "Lanjekar",
+    "email": "danishslanjekar@gmail.com",
+    "password": "$2b$10$fO2MPri6dCPI8p14RNbQPOej9Z9b7KxZbDaZcItDODfrm3nOr7Kkm",
+    "role": "member",
+    "deposits": 1500
+  },
+  {
+    "name": "Majjid",
+    "middlename": "",
+    "lastname": "thodage",
+    "email": "majjidthodage@gmail.com",
+    "password": "$2b$10$0swsfvG4eHm67vDJYClsyOVZKaeKzQcZPBstPM284ee2qFEaSsy1.",
+    "role": "member",
+    "deposits": 1500
+  }
+]
