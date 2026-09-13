@@ -9,8 +9,6 @@ const loanRoutes = require("./routes/loanRoutes");
 const path = require("path");
 const depositProofRoutes = require("./routes/depositProofRoutes");
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 8080;
 
