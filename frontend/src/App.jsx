@@ -44,9 +44,9 @@ function App() {
       <div className={hideNavbar ? "" : "p-6"}>
         <Routes>
           {/* Public */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<About />} />
           <Route path="/about" element={<About />} />
-          <Route path="/founders" element={<Founders />} />
+          {/* <Route path="/founders" element={<Founders />} /> */}
           <Route path="/rules" element={<Rules />} />
           <Route path="/login" element={<Login />} />
 

@@ -66,7 +66,7 @@ export default function About() {
             {/* Badge */}
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 sm:text-sm">
               <Building2 size={15} />
-              Azhari United Society App
+              Azhari United Society
             </div>
 
             {/* Heading */}
