@@ -1,7 +1,11 @@
 import axios from "axios";
 
+// const axiosClient = axios.create({
+//   baseURL: "http://localhost:5000", 
+// });
+
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5000", // adjust as per your backend
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Automatically attach JWT if available
