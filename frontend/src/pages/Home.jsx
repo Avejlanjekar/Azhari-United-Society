@@ -11,14 +11,14 @@ export default function Home() {
         <div className="flex justify-center mb-6">
           <img
             src={logo}
-            alt="Ahlan Razanagar Society Logo"
+            alt="Azhari-United society"
             className="w-28 h-28 sm:w-36 sm:h-36 rounded-full shadow-xl border-4 border-blue-100 hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         {/* Heading */}
         <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-4 leading-snug">
-          Welcome to <span className="text-blue-600">Ahlan Razanagar Society</span>
+          Welcome to <span className="text-blue-600">Azhari-United Society</span>
         </h1>
 
       
@@ -26,7 +26,7 @@ export default function Home() {
 
         {/* Paragraph */}
         <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-          At <span className="font-semibold text-blue-600">Ahlan Razanagar Society</span>,
+          At <span className="font-semibold text-blue-600">Azhari-United Society</span>,
           we believe in creating a transparent and trustworthy financial system
           for our members. Our platform makes it easier than ever to manage
           deposits, apply for loans, and track contributions — all in one secure
